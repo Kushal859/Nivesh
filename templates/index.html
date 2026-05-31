@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nivesh — India's AI Equity Analyst</title>
+<meta name="description" content="CFA-grade fundamental analysis for every NSE/BSE listed company. Plain English. India prices. Powered by AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root {
+  --ink:#0d1117; --ink2:#1c2333; --ink3:#253047;
+  --mist:#f0f4f8; --mist2:#e2e8f0; --mist3:#cbd5e0;
+  --text:#1a202c; --text2:#4a5568; --text3:#718096; --text4:#a0aec0;
+  --gold:#d4a017; --gold2:#f5c842; --gold-bg:#fefce8;
+  --green:#0d9260; --green2:#10b981; --green-bg:#ecfdf5;
+  --red:#dc2626; --red-bg:#fef2f2;
+  --amber:#d97706; --amber-bg:#fffbeb;
+  --blue:#1d4ed8; --blue2:#3b82f6; --blue-bg:#eff6ff;
+  --border:rgba(0,0,0,0.07); --border2:rgba(0,0,0,0.12);
+  --radius:12px; --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);
+  --shadow2:0 4px 24px rgba(0,0,0,0.09);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sora',sans-serif;background:#fff;color:var(--text);line-height:1.6;font-size:15px;}
+a{text-decoration:none;color:inherit;}
+button{font-family:'Sora',sans-serif;cursor:pointer;border:none;outline:none;}
+input{font-family:'Sora',sans-serif;outline:none;border:none;}
+
+#landing{display:block;} #app-page{display:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:0 40px;height:64px;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:32px;margin-left:48px;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text2);transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-right{margin-left:auto;display:flex;gap:12px;align-items:center;}
+.btn-ghost{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2);background:transparent;border:1px solid var(--border2);transition:all .2s;}
+.btn-ghost:hover{background:var(--mist);color:var(--text);}
+.btn-primary{padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:var(--ink);transition:all .2s;}
+.btn-primary:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:var(--shadow2);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;background:linear-gradient(160deg,#fafbff 0%,#f0f4f8 50%,#fefce8 100%);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(212,160,23,0.08) 0%,transparent 70%);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;margin-bottom:28px;background:var(--gold-bg);border:1px solid rgba(212,160,23,0.3);font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;animation:fadeUp .6s ease both;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,6vw,68px);font-weight:700;line-height:1.12;color:var(--ink);max-width:820px;margin-bottom:24px;animation:fadeUp .6s .1s ease both;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero-sub{font-size:17px;color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:44px;font-weight:300;animation:fadeUp .6s .2s ease both;}
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s .3s ease both;}
+.btn-hero{padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;color:#fff;background:var(--ink);transition:all .25s;box-shadow:0 4px 20px rgba(13,17,23,0.18);}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(13,17,23,0.24);background:var(--ink2);}
+.btn-hero-outline{padding:14px 32px;border-radius:10px;font-size:15px;font-weight:500;color:var(--text);background:#fff;border:1.5px solid var(--border2);transition:all .25s;}
+.btn-hero-outline:hover{border-color:var(--mist3);background:var(--mist);}
+.hero-stats{display:flex;gap:48px;margin-top:64px;justify-content:center;animation:fadeUp .6s .4s ease both;}
+.hero-stat-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);}
+.hero-stat-lbl{font-size:12px;color:var(--text3);margin-top:2px;}
+
+/* PROBLEM STRIP */
+.problem-strip{background:var(--ink);color:#fff;padding:24px 40px;display:flex;gap:48px;justify-content:center;align-items:center;flex-wrap:wrap;}
+.prob-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold2);}
+.prob-lbl{font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px;}
+
+/* SECTIONS */
+section{padding:100px 40px;max-width:1100px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:16px;}
+.section-sub{font-size:16px;color:var(--text2);max-width:560px;line-height:1.7;font-weight:300;}
+
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;}
+.step-card{padding:32px 28px;border-radius:var(--radius);border:1px solid var(--border);background:#fff;box-shadow:var(--shadow);transition:all .25s;position:relative;overflow:hidden;}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2);}
+.step-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--mist2);line-height:1;margin-bottom:16px;}
+.step-title{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.step-text{font-size:13px;color:var(--text2);line-height:1.65;}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:56px;}
+.feat-card{padding:28px;border-radius:var(--radius);border:1px solid var(--border);background:#fff;box-shadow:var(--shadow);display:flex;gap:20px;transition:all .2s;}
+.feat-card:hover{border-color:var(--mist3);box-shadow:var(--shadow2);}
+.feat-icon-wrap{width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.feat-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.feat-text{font-size:13px;color:var(--text2);line-height:1.6;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
+.price-card{padding:32px 28px;border-radius:var(--radius);border:1.5px solid var(--border);background:#fff;box-shadow:var(--shadow);transition:all .2s;position:relative;}
+.price-card.featured{border-color:var(--ink);background:var(--ink);color:#fff;transform:scale(1.03);}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;}
+.price-tier{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.price-card.featured .price-tier{color:rgba(255,255,255,0.5);}
+.price-amount{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--ink);}
+.price-card.featured .price-amount{color:#fff;}
+.price-period{font-size:13px;color:var(--text3);}
+.price-card.featured .price-period{color:rgba(255,255,255,0.5);}
+.price-desc{font-size:13px;color:var(--text2);margin:12px 0 20px;line-height:1.6;}
+.price-card.featured .price-desc{color:rgba(255,255,255,0.7);}
+.price-list{list-style:none;margin-bottom:28px;}
+.price-list li{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.price-card.featured .price-list li{color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.1);}
+.price-list li i{font-size:14px;color:var(--green2);flex-shrink:0;}
+.price-card.featured .price-list li i{color:var(--gold2);}
+.price-list li:last-child{border-bottom:none;}
+.btn-plan{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:600;transition:all .2s;}
+.btn-plan-dark{background:var(--ink);color:#fff;}
+.btn-plan-dark:hover{background:var(--ink2);}
+.btn-plan-gold{background:var(--gold);color:var(--ink);}
+.btn-plan-gold:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn-plan-outline{background:transparent;color:var(--text2);border:1.5px solid var(--border2);}
+.btn-plan-outline:hover{background:var(--mist);}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:48px 40px 32px;display:flex;flex-direction:column;gap:24px;}
+.footer-top{display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap;justify-content:space-between;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;}
+.footer-tagline{font-size:12px;max-width:240px;line-height:1.6;}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.4);transition:color .2s;}
+.footer-links a:hover{color:rgba(255,255,255,0.8);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;}
+.disclaimer{font-size:11px;color:rgba(255,255,255,0.25);margin-top:8px;max-width:700px;line-height:1.5;}
+
+/* ── APP PAGE ── */
+#app-page{background:var(--mist);min-height:100vh;}
+.app-nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 32px;height:60px;gap:16px;}
+.app-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);}
+.app-logo span{color:var(--gold);}
+.app-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text3);cursor:pointer;transition:color .2s;margin-right:8px;}
+.app-back:hover{color:var(--text);}
+.app-nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.tier-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid rgba(13,146,96,0.2);}
+.tier-pill.pro{background:var(--gold-bg);color:var(--gold);border-color:rgba(212,160,23,0.3);}
+.tier-pill.ca{background:#fdf4ff;color:#9333ea;border-color:rgba(147,51,234,0.2);}
+
+.app-body{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px);}
+
+/* SIDEBAR */
+.sidebar{background:#fff;border-right:1px solid var(--border);overflow-y:auto;}
+.search-box{padding:16px;border-bottom:1px solid var(--border);}
+.search-inner{display:flex;align-items:center;gap:8px;background:var(--mist);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;}
+.search-inner i{font-size:15px;color:var(--text3);}
+.search-inner input{background:none;font-size:13px;color:var(--text);flex:1;}
+.search-inner input::placeholder{color:var(--text4);}
+.sector-filter{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;}
+.sector-chip{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--mist);border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.sector-chip:hover,.sector-chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.company-list{overflow-y:auto;}
+.company-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.company-item:hover{background:var(--mist);}
+.company-item.active{background:var(--ink);}
+.company-item.active .ci-name{color:#fff;}
+.company-item.active .ci-ticker{color:rgba(255,255,255,0.5);}
+.company-item.active .ci-price{color:#fff;}
+.ci-logo{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text2);background:var(--mist);flex-shrink:0;}
+.company-item.active .ci-logo{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border-color:transparent;}
+.ci-info{flex:1;min-width:0;}
+.ci-name{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ci-ticker{font-size:11px;color:var(--text3);}
+.ci-right{text-align:right;flex-shrink:0;}
+.ci-price{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--text);}
+.ci-sub{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.up{color:var(--green);} .dn{color:var(--red);}
+
+/* MAIN PANEL */
+.main-panel{overflow-y:auto;padding:24px;}
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.metric-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);}
+.metric-lbl{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.metric-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);}
+.metric-sub{font-size:11px;margin-top:4px;}
+.tab-bar{display:flex;gap:2px;background:var(--mist);padding:4px;border-radius:10px;border:1px solid var(--border);margin-bottom:16px;}
+.tab-btn{flex:1;text-align:center;padding:8px 0;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-radius:7px;transition:all .15s;background:none;border:none;}
+.tab-btn.active{background:#fff;color:var(--text);box-shadow:var(--shadow);}
+.content-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px;}
+.card-head{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.ratio-tbl{width:100%;border-collapse:collapse;}
+.ratio-tbl tr{border-bottom:1px solid var(--border);}
+.ratio-tbl tr:last-child{border-bottom:none;}
+.ratio-tbl td{padding:9px 4px;font-size:13px;vertical-align:middle;}
+.ratio-tbl td:first-child{color:var(--text2);width:45%;}
+.ratio-tbl td:nth-child(2){font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--ink);}
+.ratio-tbl td:last-child{text-align:right;}
+.vs-badge{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500;padding:2px 7px;border-radius:6px;}
+.vs-up{background:var(--green-bg);color:var(--green);}
+.vs-dn{background:var(--red-bg);color:var(--red);}
+.vs-neu{background:var(--mist);color:var(--text3);}
+.flag-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:8px;margin-bottom:8px;}
+.flag-item:last-child{margin-bottom:0;}
+.flag-high{background:var(--red-bg);border-left:3px solid var(--red);}
+.flag-med{background:var(--amber-bg);border-left:3px solid var(--amber);}
+.flag-low{background:var(--green-bg);border-left:3px solid var(--green);}
+.flag-icon-wrap{font-size:16px;flex-shrink:0;margin-top:1px;}
+.flag-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.flag-text{font-size:12px;color:var(--text2);line-height:1.55;}
+.trend-section{margin-bottom:6px;}
+.trend-lbl{font-size:12px;color:var(--text2);margin-bottom:6px;display:flex;justify-content:space-between;}
+.bars-wrap{display:flex;align-items:flex-end;gap:4px;height:48px;}
+.bar{flex:1;border-radius:3px 3px 0 0;transition:opacity .2s;}
+.bar:hover{opacity:.75;}
+.bar-qtrs{display:flex;gap:4px;margin-top:4px;margin-bottom:14px;}
+.bar-qtr-lbl{flex:1;font-size:10px;text-align:center;color:var(--text4);font-family:'JetBrains Mono',monospace;}
+.yoy-row{display:flex;gap:4px;}
+.yoy-chip{flex:1;font-size:10px;font-family:'JetBrains Mono',monospace;text-align:center;padding:3px 0;border-radius:4px;}
+.sector-compare{margin-bottom:12px;}
+.sc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.sc-lbl{font-size:12px;color:var(--text2);width:100px;flex-shrink:0;}
+.sc-track{flex:1;background:var(--mist2);border-radius:4px;height:8px;position:relative;}
+.sc-bar{height:8px;border-radius:4px;background:var(--ink);}
+.sc-marker{position:absolute;top:-4px;width:2px;height:16px;background:var(--gold);border-radius:1px;}
+.sc-val{font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:500;width:50px;text-align:right;color:var(--ink);}
+.sc-legend{display:flex;gap:16px;margin-bottom:14px;}
+.sc-leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
+.sc-leg-dot{width:10px;height:10px;border-radius:2px;}
+.ai-card{background:linear-gradient(135deg,#0d1117 0%,#1a2333 100%);border-radius:var(--radius);padding:22px;margin-bottom:16px;}
+.ai-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ai-title{font-size:13px;font-weight:600;color:#fff;}
+.ai-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:12px;background:rgba(212,160,23,0.2);color:var(--gold2);border:1px solid rgba(212,160,23,0.3);}
+.ai-disclaimer{font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto;}
+.ai-body{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.85;}
+.ai-body p{margin-bottom:12px;}
+.ai-body p:last-child{margin-bottom:0;}
+.ai-dots{display:flex;gap:5px;align-items:center;}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--gold2);animation:dot-pulse 1.3s ease-in-out infinite;}
+.ai-dot:nth-child(2){animation-delay:.18s;}
+.ai-dot:nth-child(3){animation-delay:.36s;}
+.ai-loading-text{font-size:13px;color:rgba(255,255,255,0.4);margin-left:6px;}
+@keyframes dot-pulse{0%,80%,100%{transform:scale(.7);opacity:.3;}40%{transform:scale(1);opacity:1;}}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;color:var(--text3);text-align:center;}
+.empty-icon{font-size:48px;margin-bottom:16px;color:var(--mist3);}
+.empty-title{font-size:16px;font-weight:500;color:var(--text2);margin-bottom:6px;}
+.empty-sub{font-size:13px;}
+
+/* AUTH MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;}
+.modal-box{background:#fff;border-radius:16px;width:420px;max-width:94vw;padding:36px;box-shadow:0 24px 64px rgba(0,0,0,0.18);}
+.modal-tabs{display:flex;gap:0;background:var(--mist);border-radius:8px;padding:3px;margin-bottom:24px;}
+.modal-tab{flex:1;text-align:center;padding:7px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-radius:6px;transition:all .15s;border:none;background:none;}
+.modal-tab.active{background:#fff;color:var(--text);box-shadow:var(--shadow);}
+.form-field{margin-bottom:16px;}
+.form-label{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px;display:block;}
+.form-input{width:100%;padding:10px 14px;border:1px solid var(--border2);border-radius:8px;font-size:14px;font-family:'Sora',sans-serif;color:var(--text);transition:border .2s;background:#fff;}
+.form-input:focus{border-color:var(--ink);}
+.form-error{font-size:12px;color:var(--red);margin-bottom:12px;padding:8px 12px;background:var(--red-bg);border-radius:6px;}
+.btn-full{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:600;background:var(--ink);color:#fff;transition:all .2s;border:none;cursor:pointer;}
+.btn-full:hover{background:var(--ink2);}
+.btn-full:disabled{opacity:.6;cursor:not-allowed;}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,var(--mist) 25%,var(--mist2) 50%,var(--mist) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:4px;}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* LOADING SPINNER */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .6s linear infinite;vertical-align:-2px;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+#niv-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:400;box-shadow:var(--shadow2);transition:opacity .3s;pointer-events:none;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--mist3);border-radius:3px;}
+
+@media(max-width:900px){
+  .app-body{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .metrics-row{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  nav .nav-links{display:none;}
+  .steps-grid,.features-grid,.pricing-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:24px;flex-wrap:wrap;}
+  section{padding:60px 20px;}
+}
+
+/* ── MOMENTUM TAB STYLES ── */
+.mom-period-btn { padding:5px 14px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; border:1px solid var(--border2); background:transparent; color:var(--text2); font-family:'Sora',sans-serif; transition:all .15s; }
+.mom-period-btn.active { background:var(--ink); color:#fff; border-color:var(--ink); }
+.mom-ret-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; position:relative; overflow:hidden; box-shadow:var(--shadow); }
+.mom-ret-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.mom-ret-up::before { background:var(--green); }
+.mom-ret-dn::before { background:var(--red); }
+.mom-ret-neu::before { background:var(--text3); }
+.mom-signal-banner { border-radius:var(--radius); padding:14px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; border:1px solid; }
+.rsi-arc-wrap { position:relative; width:110px; height:60px; flex-shrink:0; }
+.rsi-arc-wrap svg { width:110px; height:60px; }
+.rsi-arc-val { position:absolute; bottom:2px; left:50%; transform:translateX(-50%); font-family:'Playfair Display',serif; font-size:22px; font-weight:700; }
+.sh-holding-bar { background:var(--mist2); border-radius:3px; height:5px; margin:5px 0; }
+.sh-holding-fill { height:5px; border-radius:3px; }
+.mom-spark { width:100%; height:72px; display:block; }
+.inv-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+.inv-row:last-child { border-bottom:none; }
+.inv-avatar { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ AUTH MODAL ══════════ -->
+<div id="auth-modal" style="display:none;" class="modal-overlay">
+  <div class="modal-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);">Welcome to Nivesh</div>
+      <button onclick="closeAuthModal()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);padding:4px;">&times;</button>
+    </div>
+    <div style="font-size:13px;color:var(--text3);margin-bottom:20px;">India's AI equity analyst. Free to start.</div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
+      <button class="modal-tab" id="tab-register" onclick="switchAuthTab('register')">Create account</button>
+    </div>
+    <div id="auth-error" class="form-error" style="display:none;"></div>
+
+    <div id="form-login">
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-password" placeholder="Your password" autocomplete="current-password">
+      </div>
+      <button class="btn-full" onclick="submitLogin()" id="login-btn">Sign in</button>
+    </div>
+
+    <div id="form-register" style="display:none;">
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Password (min 8 characters)</label>
+        <input class="form-input" type="password" id="reg-password" placeholder="Create a strong password" autocomplete="new-password">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-field">
+          <label class="form-label">Firm name <span style="color:var(--text4);">(optional)</span></label>
+          <input class="form-input" type="text" id="reg-firm" placeholder="Your firm">
+        </div>
+        <div class="form-field">
+          <label class="form-label">City <span style="color:var(--text4);">(optional)</span></label>
+          <input class="form-input" type="text" id="reg-city" placeholder="Mumbai">
+        </div>
+      </div>
+      <button class="btn-full" onclick="submitRegister()" id="register-btn">Create free account</button>
+    </div>
+
+    <div style="margin-top:16px;text-align:center;font-size:12px;color:var(--text4);">
+      By continuing you agree to our Terms &amp; Privacy Policy.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ LANDING PAGE ══════════ -->
+<div id="landing">
+
+<nav>
+  <div class="nav-logo">Nive<span>sh</span></div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn-ghost" onclick="openAuthModal('login')">Sign in</button>
+    <button class="btn-primary" onclick="openAuthModal('register')">Try free →</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge"><i class="ti ti-sparkles"></i> India's first AI equity analyst</div>
+  <h1>Stop trading blind.<br>Get <em>institutional-grade</em><br>research at retail prices.</h1>
+  <p class="hero-sub">CFA-level fundamental analysis for every NSE/BSE listed company — explained in plain English. The insight layer that 21 crore Indian investors were missing.</p>
+  <div class="hero-cta">
+    <button class="btn-hero" onclick="openAuthModal('register')">Analyse a stock free →</button>
+    <button class="btn-hero-outline" onclick="openApp()">See live demo</button>
+  </div>
+  <div class="hero-stats">
+    <div><div class="hero-stat-val">4,500+</div><div class="hero-stat-lbl">NSE/BSE companies covered</div></div>
+    <div><div class="hero-stat-val">20+</div><div class="hero-stat-lbl">CFA L1 ratios per company</div></div>
+    <div><div class="hero-stat-val">₹299</div><div class="hero-stat-lbl">per month — not ₹20 lakh</div></div>
+    <div><div class="hero-stat-val">5 yr</div><div class="hero-stat-lbl">financial trend history</div></div>
+  </div>
+</div>
+
+<div class="problem-strip">
+  <div class="prob-item"><div class="prob-val">₹3L Cr</div><div class="prob-lbl">Lost by retail investors FY22–FY25 (SEBI)</div></div>
+  <div class="prob-item"><div class="prob-val">91%</div><div class="prob-lbl">of F&amp;O traders lost money in FY25</div></div>
+  <div class="prob-item"><div class="prob-val">27%</div><div class="prob-lbl">India's financial literacy rate (RBI 2024)</div></div>
+  <div class="prob-item"><div class="prob-val">2%</div><div class="prob-lbl">of finfluencers are SEBI-registered</div></div>
+</div>
+
+<section id="how">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">CFA analyst in your pocket.<br>In 10 seconds.</h2>
+  <p class="section-sub">We ingest BSE XBRL filings and NSE data daily. You get the analysis instantly.</p>
+  <div class="steps-grid">
+    <div class="step-card"><div class="step-num">01</div><div class="step-title">Search any company</div><div class="step-text">Type a stock ticker or company name. Nivesh covers Nifty 500 companies with 5 years of financial history pulled directly from BSE XBRL filings — the same source your CA uses.</div></div>
+    <div class="step-card"><div class="step-num">02</div><div class="step-title">Get instant analysis</div><div class="step-text">20+ CFA L1 ratios calculated automatically. P/E, ROE, ROCE, D/E, current ratio, margin trends, promoter pledging — all computed and benchmarked against sector medians in real time.</div></div>
+    <div class="step-card"><div class="step-num">03</div><div class="step-title">Understand what it means</div><div class="step-text">Our AI analyst — powered by Claude — explains the numbers in plain English. Business quality, key risks, valuation context. Not just data. Understanding. The interpretation layer no other tool provides.</div></div>
+  </div>
+</section>
+
+<section id="features" style="background:var(--mist);max-width:100%;padding:100px 0;">
+<div style="max-width:1100px;margin:0 auto;padding:0 40px;">
+  <p class="section-label">Features</p>
+  <h2 class="section-title">Everything a CFA analyst does.<br>Automated for India.</h2>
+  <p class="section-sub">Built specifically for NSE/BSE data. Not a US tool with Indian tickers bolted on.</p>
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:var(--gold-bg);"><i class="ti ti-chart-bar" style="color:var(--gold);"></i></div><div><div class="feat-title">20+ ratio engine</div><div class="feat-text">P/E, P/B, ROE, ROCE, D/E, current ratio, EBITDA margin, net margin, interest coverage, asset turnover — all calculated from raw XBRL data, not scraped numbers.</div></div></div>
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:var(--blue-bg);"><i class="ti ti-brain" style="color:var(--blue);"></i></div><div><div class="feat-title">AI plain-English narrative</div><div class="feat-text">A 3-paragraph analyst note for every company. Business health, key risks, valuation context. Written by Claude — Anthropic's frontier AI model trained on financial data.</div></div></div>
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:var(--red-bg);"><i class="ti ti-alert-triangle" style="color:var(--red);"></i></div><div><div class="feat-title">India-specific red flags</div><div class="feat-text">Promoter pledging above 50%, rising debtor days, consecutive cash flow declines. The signals that matter in Indian markets, not US SEC filings.</div></div></div>
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:var(--green-bg);"><i class="ti ti-chart-line" style="color:var(--green);"></i></div><div><div class="feat-title">Sector benchmarking</div><div class="feat-text">"TCS P/E of 28x vs IT sector median of 22x — trading at 27% premium." Every ratio shown against sector peers so you know if a number is cheap, fair, or expensive.</div></div></div>
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:#fdf4ff;"><i class="ti ti-trending-up" style="color:#9333ea;"></i></div><div><div class="feat-title">5-year financial trends</div><div class="feat-text">Revenue, EBITDA, PAT growth visualised across 5 years. See the business momentum — not just the current quarter snapshot. YoY growth rates calculated automatically.</div></div></div>
+    <div class="feat-card"><div class="feat-icon-wrap" style="background:var(--amber-bg);"><i class="ti ti-bookmark" style="color:var(--amber);"></i></div><div><div class="feat-title">Watchlist &amp; alerts</div><div class="feat-text">Bookmark companies to your watchlist. Get a weekly digest of financial changes for your tracked companies every Monday morning.</div></div></div>
+  </div>
+</div>
+</section>
+
+<section id="pricing">
+  <p class="section-label">Pricing</p>
+  <h2 class="section-title">Not ₹20 lakh/year.<br>Not free with no value either.</h2>
+  <p class="section-sub">Transparent pricing. No hidden fees. Cancel anytime.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Free</div>
+      <div class="price-amount">₹0</div><div class="price-period">forever</div>
+      <div class="price-desc">Get started with fundamental data. No credit card needed.</div>
+      <ul class="price-list">
+        <li><i class="ti ti-check"></i>5 company lookups/day</li>
+        <li><i class="ti ti-check"></i>Key ratios dashboard</li>
+        <li><i class="ti ti-check"></i>Basic red flags</li>
+        <li><i class="ti ti-check"></i>Nifty 50 coverage</li>
+      </ul>
+      <button class="btn-plan btn-plan-outline" onclick="openAuthModal('register')">Start free</button>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Most popular</div>
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">₹299</div><div class="price-period">/month · billed monthly</div>
+      <div class="price-desc">Everything a serious retail investor needs.</div>
+      <ul class="price-list">
+        <li><i class="ti ti-check"></i>Unlimited lookups</li>
+        <li><i class="ti ti-check"></i>AI analyst narrative</li>
+        <li><i class="ti ti-check"></i>All 20+ ratios</li>
+        <li><i class="ti ti-check"></i>Sector benchmarking</li>
+        <li><i class="ti ti-check"></i>5-year trend charts</li>
+        <li><i class="ti ti-check"></i>India-specific red flags</li>
+        <li><i class="ti ti-check"></i>Nifty 500 coverage</li>
+      </ul>
+      <button class="btn-plan btn-plan-gold" onclick="openAuthModal('register')">Start 7-day trial →</button>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">CA / Business</div>
+      <div class="price-amount">₹2,999</div><div class="price-period">/month per firm</div>
+      <div class="price-desc">For CA firms and small family offices.</div>
+      <ul class="price-list">
+        <li><i class="ti ti-check"></i>Everything in Pro</li>
+        <li><i class="ti ti-check"></i>All 4,500+ NSE companies</li>
+        <li><i class="ti ti-check"></i>Bulk company analysis</li>
+        <li><i class="ti ti-check"></i>API access</li>
+        <li><i class="ti ti-check"></i>Priority support</li>
+      </ul>
+      <button class="btn-plan btn-plan-dark" onclick="openAuthModal('register')">Contact sales</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">Nivesh</div><div class="footer-tagline">India's AI equity analyst. CFA-grade research at retail prices.</div></div>
+    <div class="footer-links">
+      <a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a>
+      <a href="#" onclick="openApp();return false;">Launch app</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Nivesh. Built in India.</span>
+    <span>Not SEBI registered. Research tool only.</span>
+  </div>
+  <p class="disclaimer">Disclaimer: Nivesh is a financial research and data tool. It does not provide investment advice, buy/sell recommendations, or portfolio management services. All information is for educational purposes only. Past performance is not indicative of future results. Please consult a SEBI-registered investment adviser before making investment decisions.</p>
+</footer>
+
+</div><!-- end landing -->
+
+
+<!-- ══════════ APP PAGE ══════════ -->
+<div id="app-page">
+
+<div class="app-nav">
+  <div class="app-back" onclick="closeApp()"><i class="ti ti-arrow-left"></i> Back</div>
+  <div class="app-logo">Nive<span>sh</span></div>
+  <div class="app-nav-right">
+    <div id="nav-guest" style="display:flex;gap:8px;">
+      <button class="btn-ghost" onclick="openAuthModal('login')" style="font-size:12px;padding:7px 16px;">Sign in</button>
+      <button class="btn-primary" onclick="openAuthModal('register')" style="font-size:12px;padding:7px 16px;">Create free account</button>
+    </div>
+    <div id="nav-user" style="display:none;align-items:center;gap:12px;">
+      <span id="nav-email" style="font-size:12px;color:var(--text3);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      <div id="nav-tier" class="tier-pill">Free</div>
+      <button class="btn-ghost" onclick="doLogout()" style="font-size:12px;padding:7px 14px;">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<div class="app-body">
+  <div class="sidebar">
+    <div class="search-box">
+      <div class="search-inner">
+        <i class="ti ti-search"></i>
+        <input type="text" id="co-search" placeholder="Search ticker or name..." oninput="onSearch(this.value)">
+      </div>
+    </div>
+    <div class="sector-filter" id="sector-filter"></div>
+    <div class="company-list" id="company-list"></div>
+  </div>
+  <div class="main-panel" id="main-panel">
+    <div class="empty-state">
+      <div class="empty-icon"><i class="ti ti-chart-candle"></i></div>
+      <div class="empty-title">Select a company to begin</div>
+      <div class="empty-sub">Choose from the list on the left or search by ticker</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end app-page -->
+
+<div id="niv-toast" style="display:none;"></div>
+
+<script>
+/* ══════════════════════════════════
+   CONFIG
+══════════════════════════════════ */
+const API_BASE = window.location.origin + '/api/v1';
+
+/* ══════════════════════════════════
+   HELPERS
+══════════════════════════════════ */
+function escHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmt(v, d=2) {
+  const n = parseFloat(v);
+  return isNaN(n) ? '—' : n.toFixed(d);
+}
+function fmtMcap(v) {
+  const n = parseFloat(v);
+  if (!n) return '—';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(1) + 'L Cr';
+  if (n >= 1000)   return '₹' + (n/1000).toFixed(0) + 'K Cr';
+  return '₹' + n.toFixed(0) + ' Cr';
+}
+function fmtN(v) {
+  const n = parseFloat(v);
+  if (isNaN(n)) return '0';
+  if (n >= 100000) return (n/100000).toFixed(1) + 'L';
+  if (n >= 1000)   return (n/1000).toFixed(1) + 'K';
+  return n.toFixed(0);
+}
+function fmtPrice(v) {
+  const n = parseFloat(v);
+  return isNaN(n) ? '—' : '₹' + n.toLocaleString('en-IN', {maximumFractionDigits:2});
+}
+
+/* ══════════════════════════════════
+   STATE
+══════════════════════════════════ */
+let token        = localStorage.getItem('niv_token') || '';
+let currentUser  = null;
+let activeTicker = null;
+let activeTab    = 'overview';
+let activeSector = 'All';
+let companyList  = [];
+let companyCache = {};
+let aiCache      = {};
+let _authCb      = null;
+let _searchTimer = null;
+let activeMomPeriod = '6m';
+let momCache = {};
+
+/* ══════════════════════════════════
+   API HELPER
+══════════════════════════════════ */
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = 'Token ' + token;
+  const res = await fetch(API_BASE + path, {
+    ...opts,
+    headers: { ...headers, ...(opts.headers || {}) }
+  });
+  if (res.status === 401) { handleUnauth(); return null; }
+  if (res.status === 204) return {};
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const msg = body.error || body.detail || ('HTTP ' + res.status);
+    throw Object.assign(new Error(msg), { status: res.status });
+  }
+  return body;
+}
+
+/* ══════════════════════════════════
+   AUTH
+══════════════════════════════════ */
+async function loadUser() {
+  if (!token) return false;
+  try {
+    currentUser = await api('/auth/me/');
+    return !!currentUser;
+  } catch {
+    token = '';
+    localStorage.removeItem('niv_token');
+    return false;
+  }
+}
+
+async function submitLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) return showAuthError('Email and password are required.');
+  setBtnLoading('login-btn', true, 'Sign in');
+  try {
+    const data = await api('/auth/login/', {
+      method: 'POST', body: JSON.stringify({ email, password })
+    });
+    if (!data) { return showAuthError('Invalid credentials.'); }
+    token = data.token;
+    currentUser = data.user;
+    localStorage.setItem('niv_token', token);
+    closeAuthModal();
+    updateNavAuth();
+    renderCompanyList();
+    showToast('Welcome back, ' + currentUser.email);
+    if (activeTicker && companyCache[activeTicker]) renderMain(companyCache[activeTicker]);
+  } catch(e) {
+    showAuthError(e.message);
+  } finally {
+    setBtnLoading('login-btn', false, 'Sign in');
+  }
+}
+
+async function submitRegister() {
+  const email     = document.getElementById('reg-email').value.trim();
+  const password  = document.getElementById('reg-password').value;
+  const firm_name = document.getElementById('reg-firm').value.trim();
+  const city      = document.getElementById('reg-city').value.trim();
+  if (!email || !password) return showAuthError('Email and password are required.');
+  if (password.length < 8) return showAuthError('Password must be at least 8 characters.');
+  setBtnLoading('register-btn', true, 'Create free account');
+  try {
+    const data = await api('/auth/register/', {
+      method: 'POST', body: JSON.stringify({ email, password, firm_name, city })
+    });
+    if (!data) return showAuthError('Registration failed. Please try again.');
+    token = data.token;
+    currentUser = data.user;
+    localStorage.setItem('niv_token', token);
+    closeAuthModal();
+    updateNavAuth();
+    showToast('Account created! Welcome to Nivesh.');
+    if (activeTicker && companyCache[activeTicker]) renderMain(companyCache[activeTicker]);
+  } catch(e) {
+    showAuthError(e.message);
+  } finally {
+    setBtnLoading('register-btn', false, 'Create free account');
+  }
+}
+
+function handleUnauth() {
+  token = '';
+  currentUser = null;
+  localStorage.removeItem('niv_token');
+  updateNavAuth();
+}
+
+function doLogout() {
+  handleUnauth();
+  aiCache = {};
+  renderCompanyList();
+  if (activeTicker && companyCache[activeTicker]) renderMain(companyCache[activeTicker]);
+  showToast('Signed out.');
+}
+
+/* ══════════════════════════════════
+   AUTH MODAL UI
+══════════════════════════════════ */
+function openAuthModal(tab, callback) {
+  _authCb = callback || null;
+  switchAuthTab(tab || 'login');
+  clearAuthError();
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('auth-modal').style.display = 'flex';
+  setTimeout(() => {
+    const el = document.getElementById(tab === 'register' ? 'reg-email' : 'login-email');
+    if (el) el.focus();
+  }, 80);
+}
+
+function closeAuthModal() {
+  document.getElementById('auth-modal').style.display = 'none';
+  if (_authCb && currentUser) { _authCb(); _authCb = null; }
+}
+
+function switchAuthTab(tab) {
+  document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
+  document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  clearAuthError();
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function clearAuthError() {
+  document.getElementById('auth-error').style.display = 'none';
+}
+function setBtnLoading(id, loading, label) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.innerHTML = loading ? '<span class="spinner"></span>Please wait…' : label;
+}
+
+function updateNavAuth() {
+  const guest = document.getElementById('nav-guest');
+  const user  = document.getElementById('nav-user');
+  if (currentUser) {
+    guest.style.display = 'none';
+    user.style.display  = 'flex';
+    document.getElementById('nav-email').textContent = currentUser.email;
+    const tier = currentUser.tier || 'free';
+    const tp = document.getElementById('nav-tier');
+    tp.textContent = tier === 'ca' ? 'CA/Business' : tier.charAt(0).toUpperCase() + tier.slice(1);
+    tp.className = 'tier-pill' + (tier !== 'free' ? ' ' + tier : '');
+  } else {
+    guest.style.display = 'flex';
+    user.style.display  = 'none';
+  }
+}
+
+/* ══════════════════════════════════
+   TOAST
+══════════════════════════════════ */
+let _toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('niv-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  t.style.opacity = '1';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.style.display='none', 300); }, 3000);
+}
+
+/* ══════════════════════════════════
+   COMPANY LIST
+══════════════════════════════════ */
+async function initCompanyList() {
+  renderSkeleton();
+  try {
+    companyList = await api('/companies/') || [];
+    buildSectors();
+    renderCompanyList();
+    if (companyList.length > 0 && !activeTicker) selectCompany(companyList[0].ticker);
+  } catch(e) {
+    document.getElementById('company-list').innerHTML =
+      '<div style="padding:20px;text-align:center;color:var(--red);font-size:12px;">Failed to load companies.<br>' +
+      '<button onclick="initCompanyList()" style="background:none;border:none;color:var(--blue2);cursor:pointer;text-decoration:underline;margin-top:8px;font-size:12px;">Retry</button></div>';
+  }
+}
+
+function renderSkeleton() {
+  document.getElementById('company-list').innerHTML = Array(8).fill(0).map(() =>
+    '<div class="company-item">' +
+    '<div class="ci-logo skeleton"></div>' +
+    '<div class="ci-info">' +
+    '<div class="skeleton" style="height:12px;width:75%;border-radius:3px;margin-bottom:6px;"></div>' +
+    '<div class="skeleton" style="height:10px;width:50%;border-radius:3px;"></div>' +
+    '</div></div>'
+  ).join('');
+}
+
+function buildSectors() {
+  const sectors = ['All', ...new Set(companyList.map(c => c.sector).filter(Boolean).sort())];
+  document.getElementById('sector-filter').innerHTML = sectors.map(s =>
+    '<div class="sector-chip ' + (s === activeSector ? 'active' : '') + '" onclick="filterSector(\'' + escHtml(s) + '\')">' + escHtml(s) + '</div>'
+  ).join('');
+}
+
+function filterSector(s) {
+  activeSector = s;
+  buildSectors();
+  renderCompanyList();
+}
+
+function onSearch(v) {
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(async () => {
+    if (v.length < 2) { renderCompanyList(); return; }
+    try {
+      const params = new URLSearchParams({ q: v });
+      if (activeSector !== 'All') params.set('sector', activeSector);
+      const results = await api('/companies/?' + params.toString());
+      renderCompanyList(results || []);
+    } catch { renderCompanyList(); }
+  }, 320);
+}
+
+function renderCompanyList(list) {
+  const el  = document.getElementById('company-list');
+  let src   = list || companyList;
+  if (!list && activeSector !== 'All') src = src.filter(c => c.sector === activeSector);
+
+  if (!src.length) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:12px;">No companies found</div>';
+    return;
+  }
+
+  const wl = currentUser?.watchlist || [];
+  el.innerHTML = src.map(c => {
+    const initials = (c.ticker || '').slice(0,2);
+    const price    = c.latest_price != null ? fmtPrice(c.latest_price) : '—';
+    const pe       = c.latest_pe    != null ? 'P/E ' + parseFloat(c.latest_pe).toFixed(1) : '';
+    return '<div class="company-item ' + (c.ticker === activeTicker ? 'active' : '') + '" onclick="selectCompany(\'' + escHtml(c.ticker) + '\')">' +
+      '<div class="ci-logo">' + escHtml(initials) + '</div>' +
+      '<div class="ci-info">' +
+        '<div class="ci-name">' + escHtml(c.name) + '</div>' +
+        '<div class="ci-ticker">' + escHtml(c.ticker) + ' · ' + escHtml(c.sector || '') + '</div>' +
+      '</div>' +
+      '<div class="ci-right">' +
+        '<div class="ci-price">' + escHtml(price) + '</div>' +
+        '<div class="ci-sub">' + escHtml(pe) + '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+/* ══════════════════════════════════
+   COMPANY DETAIL
+══════════════════════════════════ */
+async function selectCompany(ticker) {
+  activeTicker = ticker;
+  activeTab    = 'overview';
+  renderCompanyList();
+  showMainLoading();
+
+  try {
+    if (!companyCache[ticker]) {
+      companyCache[ticker] = await api('/companies/' + ticker + '/');
+    }
+    if (companyCache[ticker]) renderMain(companyCache[ticker]);
+  } catch(e) {
+    document.getElementById('main-panel').innerHTML =
+      '<div class="empty-state">' +
+      '<div class="empty-icon"><i class="ti ti-alert-circle"></i></div>' +
+      '<div class="empty-title">Could not load ' + escHtml(ticker) + '</div>' +
+      '<div class="empty-sub">' + escHtml(e.message) + '</div></div>';
+  }
+}
+
+function showMainLoading() {
+  document.getElementById('main-panel').innerHTML =
+    '<div style="padding:20px;">' +
+    '<div class="skeleton" style="height:28px;width:55%;border-radius:6px;margin-bottom:20px;"></div>' +
+    '<div class="metrics-row">' + Array(4).fill('<div class="metric-card"><div class="skeleton" style="height:64px;border-radius:6px;"></div></div>').join('') + '</div>' +
+    '<div class="skeleton" style="height:44px;border-radius:10px;margin-bottom:16px;"></div>' +
+    '<div class="skeleton" style="height:280px;border-radius:12px;"></div>' +
+    '</div>';
+}
+
+/* ══════════════════════════════════
+   RENDER MAIN
+══════════════════════════════════ */
+function renderMain(c) {
+  const r   = c.latest_ratios  || {};
+  const med = c.sector_medians || {};
+  const pe  = parseFloat(r.pe_ratio);
+  const roe = parseFloat(r.roe);
+  const smPe  = parseFloat(med.pe_median);
+  const smRoe = parseFloat(med.roe_median);
+  const price = c.latest_price?.price;
+  const inWL  = (currentUser?.watchlist || []).includes(c.ticker);
+
+  document.getElementById('main-panel').innerHTML =
+    '<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap;">' +
+      '<span style="font-family:\'Playfair Display\',serif;font-size:21px;font-weight:700;color:var(--ink);">' + escHtml(c.name) + '</span>' +
+      '<span style="font-size:12px;color:var(--text3);font-family:\'JetBrains Mono\',monospace;">' + escHtml(c.ticker) + ' · NSE</span>' +
+      '<span style="margin-left:auto;display:flex;gap:8px;align-items:center;">' +
+        '<span style="font-size:11px;padding:3px 10px;border-radius:12px;background:var(--mist);color:var(--text2);border:1px solid var(--border);">' + escHtml(c.sector || '') + '</span>' +
+        '<button onclick="toggleWatchlist(\'' + escHtml(c.ticker) + '\')" title="' + (inWL?'Remove from watchlist':'Add to watchlist') + '" style="background:' + (inWL?'var(--gold-bg)':'var(--mist)') + ';border:1px solid ' + (inWL?'rgba(212,160,23,.3)':'var(--border2)') + ';border-radius:8px;padding:5px 10px;cursor:pointer;font-size:14px;color:' + (inWL?'var(--gold)':'var(--text3)') + ';"><i class="ti ti-bookmark' + (inWL?'-filled':'') + '"></i></button>' +
+      '</span>' +
+    '</div>' +
+    '<div class="metrics-row">' +
+      '<div class="metric-card"><div class="metric-lbl">Last price</div><div class="metric-val">' + (price != null ? escHtml(fmtPrice(price)) : '—') + '</div><div class="metric-sub" style="color:var(--text3);">' + escHtml(c.latest_price?.date || '') + '</div></div>' +
+      '<div class="metric-card"><div class="metric-lbl">Market cap</div><div class="metric-val" style="font-size:18px;">' + escHtml(fmtMcap(c.mcap_cr)) + '</div><div class="metric-sub" style="color:var(--text3);">' + escHtml(c.sector || '') + '</div></div>' +
+      '<div class="metric-card"><div class="metric-lbl">P/E ratio</div><div class="metric-val">' + (isNaN(pe)?'—':pe.toFixed(1)+'x') + '</div>' + (!isNaN(pe)&&!isNaN(smPe)?'<div class="metric-sub '+(pe<=smPe?'up':'dn')+'">Sector '+smPe.toFixed(1)+'x '+(pe<=smPe?'↓ cheap':'↑ premium')+'</div>':'<div class="metric-sub" style="color:var(--text3);">—</div>') + '</div>' +
+      '<div class="metric-card"><div class="metric-lbl">ROE</div><div class="metric-val">' + (isNaN(roe)?'—':roe.toFixed(1)+'%') + '</div>' + (!isNaN(roe)&&!isNaN(smRoe)?'<div class="metric-sub '+(roe>=smRoe?'up':'dn')+'">Sector '+smRoe.toFixed(1)+'% '+(roe>=smRoe?'↑ above':'↓ below')+'</div>':'<div class="metric-sub" style="color:var(--text3);">—</div>') + '</div>' +
+    '</div>' +
+    '<div class="tab-bar">' +
+      ['overview','ratios','trend','flags','momentum'].map(t =>
+        '<button class="tab-btn ' + (activeTab===t?'active':'') + '" onclick="switchTab(\'' + t + '\')">' + (t==='momentum' ? '📈 Momentum' : t.charAt(0).toUpperCase()+t.slice(1)) + '</button>'
+      ).join('') +
+    '</div>' +
+    '<div id="tab-body"></div>' +
+    '<div id="ai-section"></div>';
+
+  renderTab(c);
+  renderAI(c);
+}
+
+function switchTab(t) {
+  activeTab = t;
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent.replace('📈 ','').toLowerCase() === t)
+  );
+  const c = companyCache[activeTicker];
+  if (c) renderTab(c);
+}
+
+/* ══════════════════════════════════
+   RATIO META
+══════════════════════════════════ */
+const RATIO_META = [
+  {k:'pe_ratio',          l:'P/E ratio',          u:'x', b:'low',  sm:'pe_median'},
+  {k:'pb_ratio',          l:'P/B ratio',           u:'x', b:'low',  sm:'pb_median'},
+  {k:'roe',               l:'ROE',                 u:'%', b:'high', sm:'roe_median'},
+  {k:'roce',              l:'ROCE',                u:'%', b:'high', sm:'roce_median'},
+  {k:'debt_equity',       l:'Debt / Equity',       u:'x', b:'low',  sm:'de_median'},
+  {k:'current_ratio',     l:'Current ratio',       u:'x', b:'high', sm:null},
+  {k:'net_margin',        l:'Net margin',          u:'%', b:'high', sm:'npm_median'},
+  {k:'ebitda_margin',     l:'EBITDA margin',       u:'%', b:'high', sm:'ebm_median'},
+  {k:'interest_coverage', l:'Interest coverage',   u:'x', b:'high', sm:null},
+  {k:'asset_turnover',    l:'Asset turnover',      u:'x', b:'high', sm:null},
+  {k:'dividend_yield',    l:'Dividend yield',      u:'%', b:'high', sm:null},
+  {k:'promoter_holding',  l:'Promoter holding',    u:'%', b:'high', sm:null},
+  {k:'promoter_pledged',  l:'Promoter pledged',    u:'%', b:'low',  sm:null},
+];
+
+/* ══════════════════════════════════
+   TAB RENDERING
+══════════════════════════════════ */
+function renderTab(c) {
+  const r   = c.latest_ratios  || {};
+  const med = c.sector_medians || {};
+  const el  = document.getElementById('tab-body');
+  if (!el) return;
+
+  if (activeTab === 'overview') {
+    const keyRatios = ['pe_ratio','pb_ratio','roe','roce','net_margin'];
+    let rows = '';
+    keyRatios.forEach(k => {
+      const m = RATIO_META.find(x => x.k === k);
+      const v = parseFloat(r[k]);
+      if (isNaN(v)) return;
+      const s = m.sm ? parseFloat(med[m.sm]) : NaN;
+      let badge = '<span class="vs-badge vs-neu">—</span>';
+      if (!isNaN(s)) {
+        const good = m.b === 'high' ? v >= s : v <= s;
+        const pct  = Math.abs(((v-s)/s)*100).toFixed(0);
+        badge = '<span class="vs-badge ' + (good?'vs-up':'vs-dn') + '">' + (good?'▲':'▼') + ' ' + pct + '% vs sector</span>';
+      }
+      rows += '<tr><td>' + m.l + '</td><td>' + v.toFixed(2) + m.u + '</td><td>' + badge + '</td></tr>';
+    });
+
+    const flags = c.red_flags || [];
+    const flagsHtml = flags.length
+      ? flags.slice(0,5).map(f => renderFlagHtml(f)).join('')
+      : '<div style="padding:16px;text-align:center;color:var(--text3);font-size:13px;"><i class="ti ti-circle-check" style="font-size:20px;color:var(--green2);display:block;margin-bottom:6px;"></i>No red flags detected</div>';
+
+    el.innerHTML =
+      '<div class="two-col">' +
+        '<div class="content-card"><div class="card-head"><i class="ti ti-adjustments-horizontal"></i> Key ratios vs sector</div><table class="ratio-tbl">' + (rows || '<tr><td colspan="3" style="color:var(--text3);text-align:center;padding:16px;">No ratio data yet</td></tr>') + '</table></div>' +
+        '<div class="content-card"><div class="card-head"><i class="ti ti-flag"></i> Key red flags</div>' + flagsHtml + '</div>' +
+      '</div>';
+
+  } else if (activeTab === 'ratios') {
+    let rows = '';
+    RATIO_META.forEach(m => {
+      const v = parseFloat(r[m.k]);
+      const s = m.sm ? parseFloat(med[m.sm]) : NaN;
+      const valStr = isNaN(v) ? '<span style="color:var(--text4);">—</span>' : v.toFixed(2) + m.u;
+      let badge = '<span class="vs-badge vs-neu">no data</span>';
+      if (!isNaN(v) && !isNaN(s)) {
+        const good = m.b === 'high' ? v >= s : v <= s;
+        badge = '<span class="vs-badge ' + (good?'vs-up':'vs-dn') + '">vs ' + s.toFixed(2) + m.u + ' sector</span>';
+      }
+      rows += '<tr><td>' + m.l + '</td><td>' + valStr + '</td><td>' + badge + '</td></tr>';
+    });
+
+    let scBars = '';
+    ['pe_ratio','pb_ratio','roe','net_margin','ebitda_margin'].forEach(k => {
+      const m = RATIO_META.find(x => x.k === k);
+      const v = parseFloat(r[k]);
+      const s = m.sm ? parseFloat(med[m.sm]) : NaN;
+      if (isNaN(v) || isNaN(s)) return;
+      const max  = Math.max(v, s) * 1.25;
+      const vPct = Math.min((v/max)*100, 100).toFixed(1);
+      const sPct = Math.min((s/max)*100, 100).toFixed(1);
+      scBars += '<div class="sc-row"><div class="sc-lbl">' + m.l + '</div><div class="sc-track" style="height:14px;"><div class="sc-bar" style="width:' + vPct + '%;height:14px;border-radius:3px;"></div><div class="sc-marker" style="left:' + sPct + '%;top:-3px;height:20px;"></div></div><div class="sc-val">' + v.toFixed(1) + m.u + '</div></div>';
+    });
+
+    el.innerHTML =
+      '<div class="content-card"><div class="card-head"><i class="ti ti-calculator"></i> Complete ratio set</div><table class="ratio-tbl">' + rows + '</table></div>' +
+      '<div class="content-card"><div class="card-head"><i class="ti ti-chart-bar"></i> Sector comparison</div>' +
+      '<div class="sc-legend"><div class="sc-leg"><div class="sc-leg-dot" style="background:var(--ink)"></div>' + escHtml(c.ticker) + '</div><div class="sc-leg"><div class="sc-leg-dot" style="background:var(--gold)"></div>Sector median</div></div>' +
+      (scBars || '<div style="color:var(--text3);font-size:13px;">No sector data available</div>') +
+      '</div>';
+
+  } else if (activeTab === 'trend') {
+    const stmts = (c.statements || [])
+      .filter(s => s.period === 'annual')
+      .sort((a,b) => a.fiscal_year - b.fiscal_year)
+      .slice(-5);
+
+    if (!stmts.length) {
+      el.innerHTML = '<div class="content-card"><div style="text-align:center;padding:32px;color:var(--text3);">No annual data available yet</div></div>';
+      return;
+    }
+
+    const yrs  = stmts.map(s => 'FY' + s.fiscal_year);
+    const revs = stmts.map(s => parseFloat(s.revenue || 0));
+    const ebs  = stmts.map(s => parseFloat(s.ebitda  || 0));
+    const pats = stmts.map(s => parseFloat(s.pat     || 0));
+    const maxR = Math.max(...revs.map(Math.abs), 1);
+    const maxE = Math.max(...ebs.map(Math.abs),  1);
+    const maxP = Math.max(...pats.map(Math.abs), 1);
+
+    const makeChart = (data, max, col, label) => {
+      const bars = data.map((v,i) =>
+        '<div class="bar" title="' + yrs[i] + ': ₹' + v.toLocaleString('en-IN') + ' Cr" style="height:' + Math.max(3, Math.abs(v/max)*44) + 'px;background:' + col + ';opacity:' + (0.35+0.65*(i/Math.max(data.length-1,1))) + ';' + (v<0?'border-top:2px solid var(--red);':'') + '"></div>'
+      ).join('');
+      const qtrs = yrs.map(y => '<div class="bar-qtr-lbl">' + y + '</div>').join('');
+      const latest = data[data.length-1];
+      return '<div class="trend-section"><div class="trend-lbl"><span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:' + col + ';display:inline-block;"></span>' + label + '</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:12px;">₹' + fmtN(latest) + ' Cr</span></div><div class="bars-wrap">' + bars + '</div><div class="bar-qtrs">' + qtrs + '</div></div>';
+    };
+
+    const yoyChips = revs.map((v,i) => {
+      if (i === 0) return '<div class="yoy-chip" style="background:var(--mist);color:var(--text4);">base</div>';
+      const g = revs[i-1] > 0 ? ((v-revs[i-1])/revs[i-1]*100).toFixed(1) : '0.0';
+      const pos = parseFloat(g) >= 0;
+      return '<div class="yoy-chip" style="background:' + (pos?'var(--green-bg)':'var(--red-bg)') + ';color:' + (pos?'var(--green)':'var(--red)') + ';">' + (pos?'+':'') + g + '%</div>';
+    }).join('');
+
+    el.innerHTML =
+      '<div class="content-card"><div class="card-head"><i class="ti ti-trending-up"></i> 5-year financial history (₹ Cr)</div>' +
+      makeChart(revs, maxR, '#1d4ed8', 'Revenue') +
+      makeChart(ebs,  maxE, '#0d9260', 'EBITDA') +
+      makeChart(pats, maxP, '#d97706', 'Net Profit') +
+      '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;"><div class="card-head" style="margin-bottom:8px;"><i class="ti ti-percent"></i> Revenue growth YoY</div><div class="yoy-row">' + yoyChips + '</div></div>' +
+      '</div>';
+
+  } else if (activeTab === 'flags') {
+    const flags = c.red_flags || [];
+    const flagsHtml = flags.length
+      ? flags.map(f => {
+          const sevCol = f.severity==='high'?'var(--red)':f.severity==='med'?'var(--amber)':'var(--green)';
+          const sevBg  = f.severity==='high'?'rgba(220,38,38,0.1)':f.severity==='med'?'rgba(217,119,6,0.1)':'rgba(13,146,96,0.1)';
+          const icon   = f.severity==='high'?'ti-alert-circle':f.severity==='med'?'ti-alert-triangle':'ti-circle-check';
+          const label  = f.severity==='high'?'High':f.severity==='med'?'Medium':'Low';
+          return '<div class="flag-item flag-' + f.severity + '" style="flex-direction:column;gap:8px;">' +
+            '<div style="display:flex;align-items:center;gap:8px;">' +
+              '<i class="ti ' + icon + '" style="font-size:16px;color:' + sevCol + '"></i>' +
+              '<span class="flag-title">' + escHtml(f.title) + '</span>' +
+              '<span style="margin-left:auto;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:' + sevBg + ';color:' + sevCol + ';">' + label + '</span>' +
+            '</div>' +
+            '<div class="flag-text" style="margin-left:24px;">' + escHtml(f.detail) + '</div>' +
+            '</div>';
+        }).join('')
+      : '<div style="text-align:center;padding:32px;color:var(--text3);"><i class="ti ti-circle-check" style="font-size:32px;color:var(--green2);display:block;margin-bottom:12px;"></i>No significant risk flags detected</div>';
+
+    el.innerHTML =
+      '<div class="content-card"><div class="card-head"><i class="ti ti-alert-triangle"></i> Detailed risk analysis</div>' + flagsHtml + '</div>' +
+      '<div class="content-card" style="background:var(--mist);"><div style="font-size:12px;color:var(--text2);line-height:1.7;"><i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>Red flags are algorithmic signals derived from financial statements. Always consult a SEBI-registered adviser before investing.</div></div>';
+  }
+}
+
+function renderFlagHtml(f) {
+  const col  = f.severity==='high'?'var(--red)':f.severity==='med'?'var(--amber)':'var(--green)';
+  const icon = f.severity==='high'?'ti-alert-circle':f.severity==='med'?'ti-alert-triangle':'ti-circle-check';
+  return '<div class="flag-item flag-' + f.severity + '"><div class="flag-icon-wrap"><i class="ti ' + icon + '" style="color:' + col + '"></i></div><div><div class="flag-title">' + escHtml(f.title) + '</div><div class="flag-text">' + escHtml(f.detail) + '</div></div></div>';
+}
+
+/* ══════════════════════════════════
+   AI NARRATIVE
+══════════════════════════════════ */
+async function renderAI(c) {
+  const el = document.getElementById('ai-section');
+  if (!el) return;
+
+  if (!currentUser) {
+    el.innerHTML =
+      '<div class="ai-card"><div class="ai-header"><div class="ai-title">AI analyst summary</div><div class="ai-badge">Powered by Claude</div><div class="ai-disclaimer">Pro feature</div></div>' +
+      '<div class="ai-body" style="text-align:center;padding:20px 0;">' +
+        '<div style="font-size:28px;margin-bottom:12px;">🔒</div>' +
+        '<div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:8px;">Sign in to unlock AI analysis</div>' +
+        '<div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:16px;">Free accounts get 5 lookups/day. Pro unlocks unlimited AI narratives.</div>' +
+        '<button onclick="openAuthModal(\'register\')" style="background:var(--gold);color:var(--ink);border:none;padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">Create free account →</button>' +
+      '</div></div>';
+    return;
+  }
+
+  if (!['pro','ca'].includes(currentUser.tier)) {
+    el.innerHTML =
+      '<div class="ai-card"><div class="ai-header"><div class="ai-title">AI analyst summary</div><div class="ai-badge">Powered by Claude</div><div class="ai-disclaimer">Pro feature</div></div>' +
+      '<div class="ai-body" style="text-align:center;padding:20px 0;">' +
+        '<div style="font-size:28px;margin-bottom:12px;">⚡</div>' +
+        '<div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:8px;">Upgrade to Pro for AI analysis</div>' +
+        '<div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:16px;">₹299/month · Plain-English analyst notes for every company, powered by Claude.</div>' +
+        '<button onclick="showToast(\'Razorpay subscription — upgrade from your account page.\')" style="background:var(--gold);color:var(--ink);border:none;padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">Upgrade to Pro →</button>' +
+      '</div></div>';
+    return;
+  }
+
+  if (aiCache[c.ticker]) { showAIText(aiCache[c.ticker], c.name); return; }
+
+  el.innerHTML =
+    '<div class="ai-card"><div class="ai-header"><div class="ai-title">AI analyst summary</div><div class="ai-badge">Powered by Claude</div><div class="ai-disclaimer">Not investment advice</div></div>' +
+    '<div class="ai-body"><div style="display:flex;align-items:center;gap:8px;padding:6px 0;"><div class="ai-dots"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div><span class="ai-loading-text">Generating analysis for ' + escHtml(c.name) + '…</span></div></div></div>';
+
+  try {
+    const result = await api('/companies/' + c.ticker + '/analysis/');
+    if (!result) return;
+    aiCache[c.ticker] = result.narrative || '';
+    showAIText(aiCache[c.ticker], c.name);
+  } catch(e) {
+    const msg = e.status === 403 ? 'AI analysis requires a Pro subscription.' : 'Analysis temporarily unavailable — please retry in a moment.';
+    document.getElementById('ai-section').innerHTML =
+      '<div class="ai-card"><div class="ai-header"><div class="ai-title">AI analyst summary</div><div class="ai-badge">Powered by Claude</div><div class="ai-disclaimer">Not investment advice</div></div>' +
+      '<div class="ai-body" style="color:rgba(255,255,255,.5);">' + escHtml(msg) + '</div></div>';
+  }
+}
+
+function showAIText(text, name) {
+  const el = document.getElementById('ai-section');
+  if (!el) return;
+  const paras = text.split('\n').filter(p => p.trim()).map(p =>
+    '<p>' + escHtml(p).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') + '</p>'
+  ).join('');
+  el.innerHTML =
+    '<div class="ai-card"><div class="ai-header"><div class="ai-title">AI analyst summary — ' + escHtml(name || activeTicker) + '</div><div class="ai-badge">Powered by Claude</div><div class="ai-disclaimer">Research only · Not investment advice</div></div>' +
+    '<div class="ai-body">' + paras + '</div></div>';
+}
+
+/* ══════════════════════════════════
+   WATCHLIST
+══════════════════════════════════ */
+async function toggleWatchlist(ticker) {
+  if (!currentUser) {
+    openAuthModal('login', () => toggleWatchlist(ticker));
+    return;
+  }
+  const wl   = currentUser.watchlist || [];
+  const inWL = wl.includes(ticker);
+  try {
+    const data = await api('/watchlist/', {
+      method: inWL ? 'DELETE' : 'POST',
+      body: JSON.stringify({ ticker })
+    });
+    if (data && Array.isArray(data.watchlist)) {
+      currentUser.watchlist = data.watchlist;
+      const cached = companyCache[activeTicker];
+      if (cached) renderMain(cached);
+      showToast(inWL ? ticker + ' removed from watchlist' : ticker + ' added to watchlist');
+    }
+  } catch(e) {
+    showToast('Watchlist update failed: ' + e.message);
+  }
+}
+
+/* ══════════════════════════════════
+   NAVIGATION
+══════════════════════════════════ */
+function openApp() {
+  document.getElementById('landing').style.display  = 'none';
+  document.getElementById('app-page').style.display = 'block';
+  window.scrollTo(0, 0);
+  if (companyList.length === 0) initCompanyList();
+}
+
+function closeApp() {
+  document.getElementById('app-page').style.display = 'none';
+  document.getElementById('landing').style.display  = 'block';
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════════════════
+   BOOT
+══════════════════════════════════ */
+async function init() {
+  // Restore session
+  if (token) {
+    const ok = await loadUser();
+    if (ok) updateNavAuth();
+  }
+
+  // Enter key in auth forms
+  ['login-password','login-email'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
+  });
+  ['reg-password','reg-city'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') submitRegister(); });
+  });
+
+  // Close modal on backdrop click
+  document.getElementById('auth-modal').addEventListener('click', e => {
+    if (e.target.id === 'auth-modal') closeAuthModal();
+  });
+}
+
+init();
+
+
+/* ══════════════════════════════════
+   MOMENTUM TAB
+══════════════════════════════════ */
+function sparkPath(prices, w, h) {
+  if (!prices || prices.length < 2) return '';
+  const mn = Math.min(...prices), mx = Math.max(...prices), rng = mx - mn || 1, pad = 6;
+  return 'M' + prices.map((p, i) =>
+    `${pad + (w - pad * 2) * i / (prices.length - 1)},${h - pad - (p - mn) / rng * (h - pad * 2)}`
+  ).join('L');
+}
+
+async function renderMomentumTab(c) {
+  const el = document.getElementById('tab-body');
+  if (!el) return;
+
+  const cacheKey = c.ticker + '_' + activeMomPeriod;
+
+  el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">' +
+    '<div class="skeleton" style="height:40px;border-radius:8px;margin-bottom:14px;"></div>' +
+    '<div class="metrics-row">' + Array(4).fill('<div class="metric-card"><div class="skeleton" style="height:60px;border-radius:6px;"></div></div>').join('') + '</div>' +
+    '<div class="skeleton" style="height:180px;border-radius:12px;margin-top:14px;"></div>' +
+    '</div>';
+
+  let data = momCache[cacheKey];
+  if (!data) {
+    try {
+      data = await api('/companies/' + c.ticker + '/momentum/?period=' + activeMomPeriod);
+      if (data) momCache[cacheKey] = data;
+    } catch(e) {
+      el.innerHTML = '<div class="content-card"><div style="text-align:center;padding:32px;color:var(--text3);">' +
+        '<i class="ti ti-alert-circle" style="font-size:32px;color:var(--amber);display:block;margin-bottom:12px;"></i>' +
+        '<div style="font-size:14px;font-weight:500;color:var(--text2);margin-bottom:6px;">Momentum data not yet available</div>' +
+        '<div style="font-size:12px;line-height:1.6;">Run the setup script to seed price data first, or wait for the nightly price feed to populate.</div>' +
+        '</div></div>';
+      return;
+    }
+  }
+  if (!data) return;
+
+  const ret     = data.returns || {};
+  const rsi     = data.rsi    || {};
+  const signal  = data.signal || {};
+  const emotion = data.emotion || {};
+  const price   = data.price  || {};
+  const sh      = data.shareholding || {};
+  const prom    = sh.promoter || {};
+  const fii     = sh.fii || {};
+  const dii     = sh.dii || {};
+
+  const retCards = [
+    { l: '1 Month',  v: ret['1m']  || 0 },
+    { l: '3 Month',  v: ret['3m']  || 0 },
+    { l: '6 Month',  v: ret['6m']  || 0 },
+    { l: '1 Year',   v: ret['12m'] || 0 },
+  ];
+
+  const sigBg     = (ret['6m'] || 0) > 0 ? 'var(--green-bg)' : 'var(--red-bg)';
+  const sigBorder = (ret['6m'] || 0) > 0 ? '1px solid rgba(13,146,96,.25)' : '1px solid rgba(220,38,38,.25)';
+
+  // RSI arc SVG
+  const rsiVal  = rsi.value || 0;
+  const rsiCol  = rsi.color || 'var(--amber)';
+  const rsiAng  = (rsiVal / 100) * 180;
+  const rx      = (55 + 40 * Math.cos((rsiAng - 90) * Math.PI / 180)).toFixed(1);
+  const ry      = (52 + 40 * Math.sin((rsiAng - 90) * Math.PI / 180)).toFixed(1);
+  const dashLen = (rsiVal / 100 * 141.4).toFixed(1);
+
+  // Shareholder trend labels
+  const promoDir = (prom.trend_6q || 0) > 0.1 ? '▲ Increasing' : (prom.trend_6q || 0) < -0.1 ? '▼ Decreasing' : '— Stable';
+  const promoDirColor = (prom.trend_6q || 0) > 0.1 ? 'var(--green)' : (prom.trend_6q || 0) < -0.1 ? 'var(--red)' : 'var(--text3)';
+  const fiiDir  = (fii.trend_6q || 0) > 0.3 ? '▲ Buying' : (fii.trend_6q || 0) < -0.3 ? '▼ Selling' : '— Unchanged';
+  const fiiColor= (fii.trend_6q || 0) > 0.3 ? 'var(--green)' : (fii.trend_6q || 0) < -0.3 ? 'var(--red)' : 'var(--text3)';
+  const diiDir  = (dii.trend_6q || 0) > 0.3 ? '▲ Buying' : (dii.trend_6q || 0) < -0.3 ? '▼ Selling' : '— Unchanged';
+  const diiColor= (dii.trend_6q || 0) > 0.3 ? 'var(--green)' : (dii.trend_6q || 0) < -0.3 ? 'var(--red)' : 'var(--text3)';
+
+  // Emotion explanation in plain English
+  const emotionExplain = {
+    'EXTREME_GREED': 'Almost everyone is very excited and buying. This often means the stock is already quite expensive.',
+    'GREED':         'Most investors are feeling positive and buying. The stock has good momentum.',
+    'OPTIMISM':      'Investors are hopeful. More people are buying than selling. This is generally a healthy sign.',
+    'NEUTRAL':       'Investors are mixed — some buying, some selling. No strong direction right now.',
+    'ANXIETY':       'Many investors are feeling nervous and holding back. The market is unsure.',
+    'FEAR':          'A lot of investors are worried and selling. This can sometimes create good value opportunities.',
+    'PANIC':         'Investors are selling fast out of fear. Prices are falling sharply. This can be overdone sometimes.',
+  }[emotion.code || 'NEUTRAL'] || 'Investor mood is unclear right now.';
+
+  const rsiExplain =
+    rsiVal > 70 ? 'The RSI is above 70 — this means many people have already bought in, and the stock might be getting expensive. New buyers could face more risk.' :
+    rsiVal > 55 ? 'The RSI is above 55 — buyers are in control right now. The momentum is positive.' :
+    rsiVal > 40 ? 'The RSI is around the middle — neither buyers nor sellers are dominating. The stock is in a wait-and-see zone.' :
+    rsiVal > 25 ? 'The RSI is below 40 — the stock has been sold heavily. Sometimes this means it has been oversold and could bounce back, but check the fundamentals first.' :
+    'The RSI is very low — extreme selling has happened. This is often driven by fear rather than facts.';
+
+  el.innerHTML =
+    // Period switcher
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">' +
+    '<span style="font-size:11px;font-weight:500;color:var(--text3);">Analysis period:</span>' +
+    ['3m','6m','12m'].map(p =>
+      '<button class="mom-period-btn ' + (activeMomPeriod === p ? 'active' : '') + '" onclick="setMomPeriod(\'' + p + '\',\'' + escHtml(c.ticker) + '\')">' + p.toUpperCase() + '</button>'
+    ).join('') +
+    '<span style="margin-left:auto;font-size:11px;color:var(--text3);">' + escHtml(emotion.icon || '') + ' ' + escHtml(emotion.label || '') + ' · RSI ' + rsiVal.toFixed(1) + '</span>' +
+    '</div>' +
+
+    // Return cards
+    '<div class="metrics-row" style="margin-bottom:14px;">' +
+    retCards.map(card => {
+      const v = card.v || 0, pos = v >= 0;
+      return '<div class="mom-ret-card ' + (pos ? 'mom-ret-up' : v < 0 ? 'mom-ret-dn' : 'mom-ret-neu') + '">' +
+        '<div class="metric-lbl">' + card.l + ' Return</div>' +
+        '<div class="metric-val" style="color:' + (pos ? 'var(--green)' : 'var(--red)') + ';font-size:20px;">' + (pos?'+':'') + v.toFixed(1) + '%</div>' +
+        '</div>';
+    }).join('') +
+    '</div>' +
+
+    // Signal banner
+    '<div class="mom-signal-banner" style="background:' + sigBg + ';border:' + sigBorder + ';margin-bottom:14px;">' +
+    '<div style="font-size:24px;">' + (ret['6m'] > 10 ? '📈' : ret['6m'] > 0 ? '↗️' : ret['6m'] > -10 ? '↘️' : '📉') + '</div>' +
+    '<div style="flex:1;">' +
+      '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:' + (signal.color || 'var(--text3)') + ';margin-bottom:3px;">Price Signal · ' + activeMomPeriod.toUpperCase() + '</div>' +
+      '<div style="font-size:16px;font-weight:600;color:' + (signal.color || 'var(--text3)') + ';">' + escHtml(signal.label || '—') + '</div>' +
+      '<div style="font-size:11px;color:var(--text2);margin-top:3px;font-family:\'JetBrains Mono\',monospace;">MA20 ₹' + (price.ma20 || 0).toLocaleString('en-IN') + ' · MA50 ₹' + (price.ma50 || 0).toLocaleString('en-IN') + ' · From 52W High: ' + (price.pct_from_high || 0).toFixed(1) + '%</div>' +
+    '</div>' +
+    '<div style="text-align:right;flex-shrink:0;">' +
+      '<div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;">Current Price</div>' +
+      '<div style="font-family:\'Playfair Display\',serif;font-size:22px;font-weight:700;color:var(--ink);">₹' + (price.current || 0).toLocaleString('en-IN') + '</div>' +
+    '</div>' +
+    '</div>' +
+
+    // RSI + Emotion row
+    '<div class="two-col" style="margin-bottom:14px;">' +
+      '<div class="content-card" style="padding:16px;">' +
+        '<div class="card-head"><i class="ti ti-activity"></i> RSI Indicator — What does it mean?</div>' +
+        '<div style="display:flex;align-items:center;gap:16px;margin-top:6px;">' +
+          '<div class="rsi-arc-wrap">' +
+            '<svg viewBox="0 0 110 60" xmlns="http://www.w3.org/2000/svg">' +
+              '<path d="M10,54 A45,45 0 0,1 100,54" fill="none" stroke="var(--mist2)" stroke-width="8" stroke-linecap="round"/>' +
+              '<path d="M10,54 A45,45 0 0,1 100,54" fill="none" stroke="' + rsiCol + '" stroke-width="8" stroke-linecap="round" stroke-dasharray="' + dashLen + ' 200"/>' +
+              '<circle cx="' + rx + '" cy="' + ry + '" r="5" fill="' + rsiCol + '"/>' +
+            '</svg>' +
+            '<div class="rsi-arc-val" style="color:' + rsiCol + ';">' + rsiVal.toFixed(0) + '</div>' +
+          '</div>' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;">' + escHtml(rsi.zone || '—') + '</div>' +
+            '<div style="font-size:12px;color:var(--text2);line-height:1.6;">' + rsiExplain + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="content-card" style="padding:16px;">' +
+        '<div class="card-head"><i class="ti ti-brain"></i> How are investors feeling?</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">' +
+          '<span style="font-size:28px;">' + escHtml(emotion.icon || '😐') + '</span>' +
+          '<div>' +
+            '<div style="font-size:16px;font-weight:600;color:var(--ink);">' + escHtml(emotion.label || '—') + '</div>' +
+            '<div style="font-size:11px;color:var(--text3);">Based on price movements and trading patterns</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="font-size:12px;color:var(--text2);line-height:1.65;">' + emotionExplain + '</div>' +
+      '</div>' +
+    '</div>' +
+
+    // Shareholding section
+    '<div class="card-head" style="margin-bottom:10px;"><i class="ti ti-chart-pie"></i> Who Owns the Company — Last 6 Quarters</div>' +
+    '<div class="metrics-row" style="margin-bottom:14px;">' +
+      // Promoter
+      '<div class="metric-card" style="border-left:3px solid var(--gold);">' +
+        '<div class="metric-lbl">Founders / Owners (Promoters)</div>' +
+        '<div class="metric-val" style="color:var(--gold);font-size:18px;">' + (prom.current || 0).toFixed(1) + '%</div>' +
+        '<div style="margin:5px 0;"><div class="sh-holding-bar"><div class="sh-holding-fill" style="width:' + Math.min(prom.current || 0, 100) + '%;background:var(--gold);"></div></div></div>' +
+        '<div style="font-size:11px;color:' + promoDirColor + ';">' + promoDir + ' over 6 quarters</div>' +
+        (prom.pledging > 10 ? '<div style="font-size:11px;color:var(--red);margin-top:3px;">⚠ ' + prom.pledging.toFixed(1) + '% shares pledged as loan security</div>' : '<div style="font-size:11px;color:var(--green);margin-top:3px;">✓ No shares pledged as loan security</div>') +
+      '</div>' +
+      // FII
+      '<div class="metric-card" style="border-left:3px solid var(--blue2);">' +
+        '<div class="metric-lbl">Foreign Investors (FII)</div>' +
+        '<div class="metric-val" style="color:var(--blue2);font-size:18px;">' + (fii.current || 0).toFixed(1) + '%</div>' +
+        '<div style="margin:5px 0;"><div class="sh-holding-bar"><div class="sh-holding-fill" style="width:' + Math.min(fii.current || 0, 100) + '%;background:var(--blue2);"></div></div></div>' +
+        '<div style="font-size:11px;color:' + fiiColor + ';">' + fiiDir + ' over 6 quarters</div>' +
+      '</div>' +
+      // DII
+      '<div class="metric-card" style="border-left:3px solid var(--green);">' +
+        '<div class="metric-lbl">Indian Funds / LIC (DII)</div>' +
+        '<div class="metric-val" style="color:var(--green);font-size:18px;">' + (dii.current || 0).toFixed(1) + '%</div>' +
+        '<div style="margin:5px 0;"><div class="sh-holding-bar"><div class="sh-holding-fill" style="width:' + Math.min(dii.current || 0, 100) + '%;background:var(--green);"></div></div></div>' +
+        '<div style="font-size:11px;color:' + diiColor + ';">' + diiDir + ' over 6 quarters</div>' +
+      '</div>' +
+      // What it means
+      '<div class="metric-card" style="background:var(--mist);border:1px solid var(--border);">' +
+        '<div class="metric-lbl">What this means</div>' +
+        '<div style="font-size:12px;color:var(--text2);line-height:1.6;margin-top:6px;">' +
+          (prom.trend_6q > 0.1 ? 'The founders are buying more — usually a good sign of confidence. ' : prom.trend_6q < -0.1 ? 'The founders are reducing their stake — worth keeping an eye on. ' : 'Founders are holding steady. ') +
+          (fii.trend_6q > 0.3 ? 'Foreign investors are putting more money in. ' : fii.trend_6q < -0.3 ? 'Foreign investors are pulling money out. ' : 'Foreign investors are roughly unchanged. ') +
+          (dii.trend_6q > 0.3 ? 'Indian mutual funds and LIC are buying — domestic confidence is high.' : dii.trend_6q < -0.3 ? 'Indian mutual funds are reducing holdings.' : 'Indian funds are holding steady.') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    // AI narrative section (momentum)
+    '<div class="ai-card" id="mom-ai-section">' +
+      '<div class="ai-header">' +
+        '<div class="ai-title">Plain-English AI Explanation</div>' +
+        '<div class="ai-badge">Powered by Claude</div>' +
+        '<div class="ai-disclaimer">Not investment advice</div>' +
+      '</div>' +
+      '<div id="mom-ai-body" class="ai-body" style="color:rgba(255,255,255,.35);font-size:12px;">Click below for a simple explanation of what all this data means — written so anyone can understand it, with no finance jargon.</div>' +
+      (!currentUser ? '<button onclick="openAuthModal(\'login\')" style="margin-top:12px;padding:8px 18px;border-radius:7px;background:var(--gold);border:none;color:var(--ink);font-family:\'Sora\',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Sign in to unlock →</button>' :
+       !['pro','ca'].includes(currentUser.tier) ? '<button onclick="showToast(\'Upgrade to Pro at ₹299/month for AI explanations\')" style="margin-top:12px;padding:8px 18px;border-radius:7px;background:var(--gold);border:none;color:var(--ink);font-family:\'Sora\',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Upgrade to Pro for AI explanation →</button>' :
+       '<button onclick="loadMomNarrative(\'' + escHtml(c.ticker) + '\')" id="mom-ai-btn" style="margin-top:12px;padding:8px 18px;border-radius:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-family:\'Sora\',sans-serif;font-size:13px;cursor:pointer;">Explain this in simple words →</button>') +
+    '</div>';
+}
+
+async function setMomPeriod(period, ticker) {
+  activeMomPeriod = period;
+  const c = companyCache[ticker];
+  if (c) await renderMomentumTab(c);
+}
+
+async function loadMomNarrative(ticker) {
+  const btn    = document.getElementById('mom-ai-btn');
+  const bodyEl = document.getElementById('mom-ai-body');
+  if (!btn || !bodyEl) return;
+
+  btn.disabled   = true;
+  btn.innerHTML  = '<span class="spinner"></span>Writing explanation…';
+  bodyEl.innerHTML = '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;"><div class="ai-dots"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div><span class="ai-loading-text">Writing a simple explanation for you…</span></div>';
+
+  try {
+    const result = await api('/companies/' + ticker + '/momentum/narrative/?period=' + activeMomPeriod);
+    if (!result) return;
+    const paras = (result.narrative || '').split('\n')
+      .filter(p => p.trim())
+      .map(p => '<p>' + escHtml(p).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') + '</p>')
+      .join('');
+    bodyEl.innerHTML = paras;
+    if (btn) btn.style.display = 'none';
+  } catch(e) {
+    bodyEl.innerHTML = '<div style="color:rgba(255,255,255,.5);">Could not generate explanation: ' + escHtml(e.message) + '</div>';
+    if (btn) { btn.disabled = false; btn.innerHTML = 'Retry →'; }
+  }
+}
+
+// Override switchTab to handle momentum
+const _origSwitchTab = switchTab;
+function switchTab(t) {
+  activeTab = t;
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent.replace('📈 ','').toLowerCase() === t)
+  );
+  const c = companyCache[activeTicker];
+  if (!c) return;
+  if (t === 'momentum') {
+    renderMomentumTab(c);
+  } else {
+    renderTab(c);
+  }
+}
+
+</script>
+</body>
+</html>
