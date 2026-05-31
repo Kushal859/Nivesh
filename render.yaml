@@ -1,0 +1,68 @@
+services:
+  - type: web
+    name: nivesh-api
+    env: python
+    rootDir: nivesh
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn core.wsgi --workers 3 --timeout 60 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nivesh-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: nivesh-redis
+          type: redis
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: "https://nivesh-api.onrender.com"
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_PLAN_PRO
+        sync: false
+      - key: RAZORPAY_PLAN_CA
+        sync: false
+
+  - type: worker
+    name: nivesh-worker
+    env: python
+    rootDir: nivesh
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A core worker --loglevel=info --concurrency=2
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        fromService:
+          name: nivesh-api
+          type: web
+          envVarKey: DJANGO_SECRET_KEY
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nivesh-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: nivesh-redis
+          type: redis
+          property: connectionString
+
+  - type: redis
+    name: nivesh-redis
+    plan: free
+    ipAllowList: []
+
+databases:
+  - name: nivesh-db
+    databaseName: nivesh
+    user: nivesh
+    plan: free
